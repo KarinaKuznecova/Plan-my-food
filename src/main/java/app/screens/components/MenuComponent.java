@@ -5,22 +5,24 @@ import app.graphics.Rectangle;
 import app.graphics.RenderHandler;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuComponent implements Component, Clickable {
 
     private List<Component> components;
-    private MenuButton mainButton;
-    private MenuButton mealsButton;
-    private MenuButton productsButton;
+    private Rectangle rectangle;
 
-    private int buttonWidth = 150;
+    public MenuComponent(Rectangle rectangle, List<String> buttonNames, int buttonWidth) {
+        this.rectangle = rectangle;
+        components = new ArrayList<>();
 
-    public MenuComponent(Rectangle rectangle) {
-        mainButton = new MenuButton(new Rectangle(rectangle.getX(), rectangle.getY(), buttonWidth, rectangle.getHeight()), "Main");
-        mealsButton = new MenuButton(new Rectangle(rectangle.getX() + buttonWidth, rectangle.getY(), buttonWidth, rectangle.getHeight()), "Meals");
-        productsButton = new MenuButton(new Rectangle(rectangle.getX() + (buttonWidth * 2), rectangle.getY(), buttonWidth, rectangle.getHeight()), "Products");
-        components = List.of(mainButton, mealsButton, productsButton);
+        int buttonCount = 0;
+        for (String name : buttonNames) {
+            MenuButton button = new MenuButton(new Rectangle(rectangle.getX() + (buttonWidth * buttonCount), rectangle.getY(), buttonWidth, rectangle.getHeight()), name);
+            buttonCount++;
+            components.add(button);
+        }
     }
 
     @Override
@@ -63,5 +65,10 @@ public class MenuComponent implements Component, Clickable {
             }
         }
         return false;
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 }

@@ -44,6 +44,7 @@ public class MenuButton implements Component, Clickable {
             logger.info("Button {} clicked", buttonText);
             switch (buttonText) {
                 case "Products" -> app.setCurrentScreen(app.getProductsScreen());
+                case "New Product" -> app.setCurrentScreen(app.getNewProductScreen());
                 case "Meals" -> app.setCurrentScreen(app.getMealsScreen());
                 case "Main" -> app.setCurrentScreen(app.getMainScreen());
                 case "Quit" -> System.exit(0);
@@ -60,5 +61,10 @@ public class MenuButton implements Component, Clickable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 }

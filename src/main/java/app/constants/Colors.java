@@ -40,6 +40,7 @@ public class Colors {
 
     public static final Color mainMenuBgColor = purple_dark;
     public static final Color productBgColor = pink;
+    public static final Color newProductBgColor = mint_light;
     public static final Color mealsBgColor = blue;
 
     public static final Color pauseTextColor = pale_purple;

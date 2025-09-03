@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Meal {
 
-    String name;
-    Map<Ingredient, Double> ingredients = new HashMap<>();
-    List<MealTag> tags;
+    private String name;
+    private Map<Ingredient, Double> ingredients = new HashMap<>();
+    private List<MealTag> tags;
 }

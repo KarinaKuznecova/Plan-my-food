@@ -1,7 +1,6 @@
 package app.loading;
 
 import app.App;
-import app.screens.MainScreen;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;

@@ -1,6 +1,7 @@
 package app.screens.components;
 
 import app.App;
+import app.graphics.Rectangle;
 import app.graphics.RenderHandler;
 
 import java.awt.*;
@@ -12,4 +13,6 @@ public interface Component {
     void render(App app, RenderHandler renderHandler, Graphics2D graphics2D);
 
     void resize(App app);
+
+    Rectangle getRectangle();
 }

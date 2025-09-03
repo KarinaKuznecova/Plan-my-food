@@ -69,7 +69,7 @@ public class RenderHandler {
     }
 
     public int getLineLength(Graphics2D graphics2D, String text) {
-        return getLineLength(graphics2D, text, 24F);
+        return getLineLength(graphics2D, text, 20F);
     }
 
     public int getLineLength(Graphics2D graphics2D, String text, float fontSize) {
@@ -78,7 +78,7 @@ public class RenderHandler {
     }
 
     public void renderText(Graphics2D graphics2D, String text, int x, int y) {
-        renderText(graphics2D, text, x, y, 24F);
+        renderText(graphics2D, text, x, y, 20F);
     }
 
     public void renderText(Graphics2D graphics2D, String text, int x, int y, float fontSize) {
@@ -88,7 +88,7 @@ public class RenderHandler {
     }
 
     public void drawFrame(Graphics2D graphics2D, int x, int y, int width, int height) {
-        drawFrame(graphics2D, x, y, width, height, frameColorForUI, 5);
+        drawFrame(graphics2D, x, y, width, height, frameColorForUI, 3);
     }
 
     public void drawFrame(Graphics2D graphics2D, int x, int y, int width, int height, int strokeWidth) {
@@ -96,7 +96,7 @@ public class RenderHandler {
     }
 
     public void drawFrame(Graphics2D graphics2D, int x, int y, int width, int height, Color frameColor) {
-        drawFrame(graphics2D, x, y, width, height, frameColor, 5);
+        drawFrame(graphics2D, x, y, width, height, frameColor, 3);
     }
 
     public void drawFrame(Graphics2D graphics2D, int x, int y, int width, int height, Color frameColor, int strokeWidth) {

@@ -3,17 +3,18 @@ package app;
 import app.graphics.Rectangle;
 import app.graphics.RenderHandler;
 import app.loading.LoadingService;
-import app.screens.AppScreen;
-import app.screens.MainScreen;
-import app.screens.MealsScreen;
-import app.screens.ProductsScreen;
+import app.repository.JsonProductsRepository;
+import app.screens.*;
 import app.screens.components.MenuComponent;
+import app.service.MealService;
+import app.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.List;
 
 public class App extends JFrame implements Runnable {
 
@@ -28,7 +29,11 @@ public class App extends JFrame implements Runnable {
     private AppScreen currentScreen;
     private MainScreen mainScreen;
     private ProductsScreen productsScreen;
+    private NewProductScreen newProductScreen;
     private MealsScreen mealsScreen;
+
+    private ProductService productService;
+    private MealService mealService;
 
     public static void main(String[] args) {
         new App();
@@ -49,17 +54,27 @@ public class App extends JFrame implements Runnable {
         loadingService.getControllersLoadingService().loadListeners(this, canvas);
 
         renderHandler = new RenderHandler(this);
+
+        productService = new ProductService(new JsonProductsRepository());
+        mealService = new MealService();
     }
 
     private void initializeScreens() {
         logger.info("Initializing screens...");
 
-        MenuComponent menuComponent = new MenuComponent(new Rectangle(0, 0, getWidth(), 80));
+        MenuComponent menuComponent = createMainMenu();
         mainScreen = new MainScreen(menuComponent);
         productsScreen = new ProductsScreen(menuComponent);
+        newProductScreen = new NewProductScreen(menuComponent);
         mealsScreen = new MealsScreen(menuComponent);
 
         setCurrentScreen(getMainScreen());
+    }
+
+    private MenuComponent createMainMenu() {
+        Rectangle mainMenuRectangle = new Rectangle(0, 0, getWidth(), 60);
+        List<String> listOfMainMenuButtons = List.of("Main", "Products", "Meals", "Settings", "Quit");
+        return new MenuComponent(mainMenuRectangle, listOfMainMenuButtons, 150);
     }
 
     // main loop methods
@@ -134,11 +149,23 @@ public class App extends JFrame implements Runnable {
         return productsScreen;
     }
 
+    public NewProductScreen getNewProductScreen() {
+        return newProductScreen;
+    }
+
     public MealsScreen getMealsScreen() {
         return mealsScreen;
     }
 
     public RenderHandler getRenderHandler() {
         return renderHandler;
+    }
+
+    public ProductService getProductService() {
+        return productService;
+    }
+
+    public MealService getMealService() {
+        return mealService;
     }
 }
