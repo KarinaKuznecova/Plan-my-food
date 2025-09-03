@@ -12,6 +12,7 @@ import app.screens.components.MenuButton;
 import app.screens.components.MenuComponent;
 import app.screens.components.TextField;
 import app.screens.events.ButtonEvent;
+import app.screens.events.ChangeScreenButtonEvent;
 import app.screens.events.CreateNewProductEvent;
 
 import java.awt.*;
@@ -62,7 +63,8 @@ public class NewProductScreen implements AppScreen {
         okButton = new MenuButton(new Rectangle(centerX - 90, app.getHeight() - 100, 80, 50), "Ok", okButtonEvent);
         components.add(okButton);
         
-        cancelButton = new MenuButton(new Rectangle(centerX + 10, app.getHeight() - 100, 80, 50), "Cancel", null);
+        ButtonEvent cancelButtonEvent = new ChangeScreenButtonEvent(app, ChangeScreenButtonEvent.PRODUCTS_SCREEN);
+        cancelButton = new MenuButton(new Rectangle(centerX + 10, app.getHeight() - 100, 80, 50), "Cancel", cancelButtonEvent);
         components.add(cancelButton);
 
         components.add(menuComponent);

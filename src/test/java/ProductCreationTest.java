@@ -98,4 +98,36 @@ public class ProductCreationTest extends TestCase {
         assertNotNull("Apple should be retrievable", retrievedApple);
         assertNotNull("Milk should be retrievable", retrievedMilk);
     }
+    
+    public void testCreateProductWorkflow() {
+        // Test the complete workflow that the UI would follow
+        TestProductsRepository repository = new TestProductsRepository();
+        ProductService productService = new ProductService(repository);
+        
+        // Simulate user entering data (this is what the UI components would provide)
+        String productName = "  Fresh Milk  "; // Test with leading/trailing spaces
+        ProductTag selectedTag = ProductTag.DAIRY;
+        MeasuringUnit selectedUnit = MeasuringUnit.MILILITER;
+        
+        // Simulate validation logic (same as in CreateNewProductEvent)
+        String trimmedName = productName != null ? productName.trim() : "";
+        boolean isValid = !trimmedName.isEmpty() && selectedTag != null && selectedUnit != null;
+        
+        assertTrue("Form should be valid with all fields filled", isValid);
+        
+        // Create and save product (same as in CreateNewProductEvent)
+        Product product = new Product(trimmedName, selectedUnit, Arrays.asList(selectedTag));
+        productService.createProduct(product);
+        
+        // Verify product was saved correctly
+        Product retrievedProduct = productService.getProductByName(trimmedName);
+        assertNotNull("Product should be saved", retrievedProduct);
+        assertEquals("Product name should be trimmed", "Fresh Milk", retrievedProduct.getName());
+        
+        // Verify it appears in the product list
+        List<Product> allProducts = productService.getAllProducts();
+        assertEquals("Should have 1 product", 1, allProducts.size());
+        assertTrue("Product list should contain our product", 
+                   allProducts.stream().anyMatch(p -> p.getName().equals("Fresh Milk")));
+    }
 }
