@@ -24,6 +24,9 @@ public class KeyboardListener  implements KeyListener, FocusListener {
         if (keyCode < keys.length) {
             keys[keyCode] = true;
         }
+        
+        // Forward key events to the current screen
+        app.keyPressed(keyCode, event.getKeyChar());
     }
 
     @Override

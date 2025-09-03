@@ -13,4 +13,8 @@ public interface AppScreen {
     void leftClick(App app, int xScreenRelated, int yScreenRelated, boolean doubleClick);
     void rightClick(App app, int xScreenRelated, int yScreenRelated);
     void mouseOver(App app, Graphics2D graphics2D, int xScreenRelated, int yScreenRelated);
+    
+    default void keyPressed(App app, int keyCode, char keyChar) {
+        // Default empty implementation for backward compatibility
+    }
 }

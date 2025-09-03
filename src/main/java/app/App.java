@@ -139,6 +139,10 @@ public class App extends JFrame implements Runnable {
     public void rightClick(int xScreenRelated, int yScreenRelated) {
         currentScreen.rightClick(this, xScreenRelated, yScreenRelated);
     }
+    
+    public void keyPressed(int keyCode, char keyChar) {
+        currentScreen.keyPressed(this, keyCode, keyChar);
+    }
 
     // Getters and Setters
 
