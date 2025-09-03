@@ -5,20 +5,30 @@ import app.graphics.Rectangle;
 import app.graphics.RenderHandler;
 import app.screens.components.Clickable;
 import app.screens.components.Component;
+import app.screens.components.MenuButton;
 import app.screens.components.MenuComponent;
+import app.screens.events.ButtonEvent;
+import app.screens.events.CreateNewProductEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static app.constants.Colors.mealsBgColor;
 import static app.constants.Colors.newProductBgColor;
 
 public class NewProductScreen implements AppScreen {
 
-    List<Component> components = new ArrayList<>();
+    private final List<Component> components = new ArrayList<>();
+    private MenuButton okButton;
+    private MenuButton cancelButton;
 
-    public NewProductScreen(MenuComponent menuComponent) {
+    public NewProductScreen(App app, MenuComponent menuComponent) {
+        ButtonEvent okButtonEvent = new CreateNewProductEvent(app);
+        okButton = new MenuButton(new Rectangle(app.getWidth() / 2 - 90, app.getHeight() - 100, 80, 50), "Ok", okButtonEvent);
+        components.add(okButton);
+        cancelButton = new MenuButton(new Rectangle(app.getWidth() / 2 + 10, app.getHeight() - 100, 80, 50), "Cancel", null);
+        components.add(cancelButton);
+
         components.add(menuComponent);
     }
 
@@ -42,6 +52,10 @@ public class NewProductScreen implements AppScreen {
         for (Component component : components) {
             component.resize(app);
         }
+        okButton.getRectangle().setX(app.getWidth() - 200);
+        okButton.getRectangle().setY(app.getHeight() - 100);
+        cancelButton.getRectangle().setX(app.getWidth() - 100);
+        cancelButton.getRectangle().setY(app.getHeight() - 100);
     }
 
     @Override

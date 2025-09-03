@@ -3,23 +3,27 @@ package app.screens.components;
 import app.App;
 import app.graphics.Rectangle;
 import app.graphics.RenderHandler;
+import app.screens.events.ChangeScreenButtonEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MenuComponent implements Component, Clickable {
 
     private List<Component> components;
     private Rectangle rectangle;
 
-    public MenuComponent(Rectangle rectangle, List<String> buttonNames, int buttonWidth) {
+    public MenuComponent(App app, Rectangle rectangle, Map<String, String> buttonNames, int buttonWidth) {
         this.rectangle = rectangle;
         components = new ArrayList<>();
 
         int buttonCount = 0;
-        for (String name : buttonNames) {
-            MenuButton button = new MenuButton(new Rectangle(rectangle.getX() + (buttonWidth * buttonCount), rectangle.getY(), buttonWidth, rectangle.getHeight()), name);
+        for (String name : buttonNames.keySet()) {
+            Rectangle buttonRectangle = new Rectangle(rectangle.getX() + (buttonWidth * buttonCount), rectangle.getY(), buttonWidth, rectangle.getHeight());
+            ChangeScreenButtonEvent buttonEvent = new ChangeScreenButtonEvent(app, buttonNames.get(name));
+            MenuButton button = new MenuButton(buttonRectangle, name, buttonEvent);
             buttonCount++;
             components.add(button);
         }

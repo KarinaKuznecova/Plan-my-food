@@ -14,7 +14,11 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import static app.screens.events.ChangeScreenButtonEvent.*;
 
 public class App extends JFrame implements Runnable {
 
@@ -64,8 +68,8 @@ public class App extends JFrame implements Runnable {
 
         MenuComponent menuComponent = createMainMenu();
         mainScreen = new MainScreen(menuComponent);
-        productsScreen = new ProductsScreen(menuComponent);
-        newProductScreen = new NewProductScreen(menuComponent);
+        productsScreen = new ProductsScreen(this, menuComponent);
+        newProductScreen = new NewProductScreen(this, menuComponent);
         mealsScreen = new MealsScreen(menuComponent);
 
         setCurrentScreen(getMainScreen());
@@ -73,8 +77,13 @@ public class App extends JFrame implements Runnable {
 
     private MenuComponent createMainMenu() {
         Rectangle mainMenuRectangle = new Rectangle(0, 0, getWidth(), 60);
-        List<String> listOfMainMenuButtons = List.of("Main", "Products", "Meals", "Settings", "Quit");
-        return new MenuComponent(mainMenuRectangle, listOfMainMenuButtons, 150);
+        Map<String, String> buttonNames = new LinkedHashMap<>();
+        buttonNames.put("Main", MAIN_SCREEN);
+        buttonNames.put("Products", PRODUCTS_SCREEN);
+        buttonNames.put("Meals", MEALS_SCREEN);
+        buttonNames.put("Settings", SETTINGS_SCREEN);
+        buttonNames.put("Quit", QUIT);
+        return new MenuComponent(this, mainMenuRectangle, buttonNames, 150);
     }
 
     // main loop methods

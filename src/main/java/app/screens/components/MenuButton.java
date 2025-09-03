@@ -3,6 +3,7 @@ package app.screens.components;
 import app.App;
 import app.graphics.RenderHandler;
 import app.graphics.Rectangle;
+import app.screens.events.ButtonEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,10 +15,12 @@ public class MenuButton implements Component, Clickable {
 
     private String buttonText;
     private Rectangle rectangle;
+    private ButtonEvent event;
 
-    public MenuButton(Rectangle rectangle, String buttonText) {
+    public MenuButton(Rectangle rectangle, String buttonText, ButtonEvent event) {
         this.rectangle = rectangle;
         this.buttonText = buttonText;
+        this.event = event;
     }
 
     public void update(App app) {
@@ -42,12 +45,8 @@ public class MenuButton implements Component, Clickable {
     public boolean handleLeftMouseClick(App app, Rectangle mouseRectangle, boolean doubleClick) {
         if (mouseRectangle.intersects(rectangle)) {
             logger.info("Button {} clicked", buttonText);
-            switch (buttonText) {
-                case "Products" -> app.setCurrentScreen(app.getProductsScreen());
-                case "New Product" -> app.setCurrentScreen(app.getNewProductScreen());
-                case "Meals" -> app.setCurrentScreen(app.getMealsScreen());
-                case "Main" -> app.setCurrentScreen(app.getMainScreen());
-                case "Quit" -> System.exit(0);
+            if (event != null) {
+                event.fireEvent();
             }
             return true;
         }
@@ -66,5 +65,9 @@ public class MenuButton implements Component, Clickable {
     @Override
     public Rectangle getRectangle() {
         return rectangle;
+    }
+
+    public ButtonEvent getEvent() {
+        return event;
     }
 }

@@ -10,18 +10,25 @@ import app.screens.components.MenuComponent;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static app.constants.Colors.productBgColor;
+import static app.screens.events.ChangeScreenButtonEvent.EDIT_TAGS_SCREEN;
+import static app.screens.events.ChangeScreenButtonEvent.NEW_PRODUCT_SCREEN;
 
 public class ProductsScreen implements AppScreen {
 
     List<Component> components = new ArrayList<>();
 
-    public ProductsScreen(MenuComponent menuComponent) {
+    public ProductsScreen(App app, MenuComponent menuComponent) {
         components.add(menuComponent);
         Rectangle submenuRectangle = new Rectangle(0, menuComponent.getRectangle().getY() + menuComponent.getRectangle().getHeight(), 160, 60);
-        components.add(new MenuComponent(submenuRectangle, List.of("New Product", "Edit Tags"), 160));
+        Map<String, String> buttonNames = new LinkedHashMap<>();
+        buttonNames.put("New Product", NEW_PRODUCT_SCREEN);
+        buttonNames.put("Edit Tags", EDIT_TAGS_SCREEN);
+        components.add(new MenuComponent(app, submenuRectangle, buttonNames, 160));
     }
 
     @Override
